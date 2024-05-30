@@ -1,13 +1,12 @@
-
-def on_button_pressed_a():
-    global State
-    State = not (State)
-input.on_button_pressed(Button.A, on_button_pressed_a)
-
-State = False
+serial.redirect_to_usb()
 State = False
 
 def on_forever():
+    global State
+    if Environment.sonarbit_distance(Environment.Distance_Unit.DISTANCE_UNIT_CM, DigitalPin.P16) < 3:
+        State = True
+    else:
+        State = False
     if State:
         basic.show_leds("""
             # # # # #
@@ -16,9 +15,6 @@ def on_forever():
             # # # # #
             # # # # #
             """)
-        f = open("data.json", "w")
-        f.write("{'state':1}")
-        f.close()
     else:
         basic.show_leds("""
             . . . . .
@@ -27,7 +23,5 @@ def on_forever():
             . . . . .
             . . . . .
             """)
-        f = open("data.json", "w")
-        f.write("{'state':0}")
-        f.close()
+    serial.write_line("" + str((State)))
 basic.forever(on_forever)

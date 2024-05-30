@@ -4,7 +4,8 @@
     "dependencies": {
         "core": "*",
         "radio": "*",
-        "microphone": "*"
+        "microphone": "*",
+        "Environment-and-Science-IoT": "github:tinkertanker/pxt-iot-environment-kit#v5.2.5"
     },
     "files": [
         "main.blocks",
@@ -23,5 +24,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "pyprj"
 }

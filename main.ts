@@ -1,11 +1,13 @@
-input.onButtonPressed(Button.A, function () {
-    State = !(State)
-    serial.writeLine("" + (State))
-})
-let State = false
 serial.redirectToUSB()
-State = false
-basic.forever(function () {
+let State = false
+basic.forever(function on_forever() {
+    
+    if (Environment.sonarbit_distance(Environment.Distance_Unit.Distance_Unit_cm, DigitalPin.P16) < 3) {
+        State = true
+    } else {
+        State = false
+    }
+    
     if (State) {
         basic.showLeds(`
             # # # # #
@@ -23,4 +25,6 @@ basic.forever(function () {
             . . . . .
             `)
     }
+    
+    serial.writeLine("" + ("" + State))
 })
